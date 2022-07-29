@@ -6,3 +6,13 @@ Although the implementation of both ArduinoOTA and ESP8266mDNS is fairly straigh
 WOTADNS is the end result and it makes life a little easier and reduces clutter in sketches.
 
 Details of the various methods of the WOTADNS class are given in 'WOTADNS.h'
+
+Two macros are included:
+
+**DISABLE_WIFI**
+
+This macro allows the ESP8266 to be used without Wi-fi
+
+**SERIAL_BEGIN(baudrate)**
+
+Starts up the Serial port properly (in my opinion)
