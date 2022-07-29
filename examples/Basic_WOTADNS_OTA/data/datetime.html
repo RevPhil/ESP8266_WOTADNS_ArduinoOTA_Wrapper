@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Set Date &Aacute; Time...</title>
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+button {
+	#margin:0px 0px 5px 0px;
+	font-weight:bold;
+	font-size:1em;
+}
+th {
+	text-align:right;
+	padding:3px;
+}
+
+td {
+	text-align:center;
+	padding:3px;
+}
+
+</style>
+<script>
+
+function getDateTime(btn)
+{
+var num = 0;
+
+nocache = "&nocache=" + Math.random() * 1000000;
+var request = new XMLHttpRequest();
+request.onreadystatechange = function()
+{
+if (this.readyState == 4) {
+if (this.status == 200) {
+if (this.responseXML != null) {
+// extract XML data from XML file
+document.getElementById("weekday").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("year").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("month").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("day").innerHTML = 
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("hour").innerHTML = 
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("minute").innerHTML = 
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+}}}}
+request.open("GET", "get_date_time" + ':' + btn + ':' + nocache, true);
+request.send(null);
+//setTimeout(function(){getDateTime(0)}, 5000);
+}
+</script>
+
+
+</head>
+
+<body onload="getDateTime(0)">
+<h1 style="color: #0000FF">DATE &amp; TIME SETTING</h1><br/>
+<table align="center" cellpadding="3" style="border-collapse: collapse; border-color: #000000; border-width: 0">
+<tr><th>Week Day</th><td>&nbsp;</td><td><span id="weekday">Week Day</span></td><td>&nbsp;</td></tr>
+<tr><th>Year</th><td><button onclick="getDateTime(1)">+</button></td>
+	<td><span id="year">0</span></td>
+	<td><button onclick="getDateTime(2)">-</button></td></tr>
+<tr><th>Month</th><td><button onclick="getDateTime(3)">+</button></td>
+	<td><span id="month">0</span></td>
+	<td><button onclick="getDateTime(4)">-</button></td></tr>
+<tr><th>Day</th><td><button onclick="getDateTime(5)">+</button></td><td><span id="day">
+	0</span></td><td><button onclick="getDateTime(6)">-</button></td></tr>
+<tr><th>Hour</th><td><button onclick="getDateTime(7)">+</button></td><td><span id="hour">
+	0</span></td><td><button onclick="getDateTime(8)">-</button></td></tr>
+<tr><th>Minute</th><td><button onclick="getDateTime(9)">+</button></td><td><span id="minute">
+	0</span></td><td><button onclick="getDateTime(10)">-</button></td></tr>
+</table>
+<p><button onclick="getDateTime(11)">SAVE CHANGES</button>
+</p>
+<p>Use Back Button to Return to Main Page</p>
+</body>
+</html>

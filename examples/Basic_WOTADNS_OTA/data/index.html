@@ -1,0 +1,548 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width" name="viewport" />
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+button {
+	#margin: 0px 0px 5px 0px;
+	font-weight: bold;
+	font-size: 1em;
+}
+.buttonBig {
+	font-size: 2em;
+	font-weight: bold;
+	vertical-align: text-bottom;
+	margin: 0px 10px 0px 10px;
+	border-radius: 5px;
+}
+
+.buttonSmall {
+	font-size: 0.75em;
+}
+.tempVal {
+	font-size: 4em;
+	font-weight: bold;
+	display: inline-block;
+	margin: 5px opx 5px 0px;
+	border: 1px black solid;
+	border-radius: 5px;
+	padding: 3px;
+}
+.timeVal {
+	display: inline-block;
+}
+.dayTable td, .dayTable th {
+	border: 1px black solid;
+}
+.readings {
+	border-collapse: collapse;
+	border: 1px solid #000000"
+}
+.readings td {
+	font-weight:bold;
+	border: 1px solid #000000;
+}
+.waterButtons {
+	display: inline-block;
+	font-size: 2em;
+	width: 4em;
+	color: white;
+	border-radius:5px;
+}
+</style>
+<script>
+function getTimeTemp(idx,btn)
+{
+var num = 0;
+nocache = "&nocache=" + Math.random() * 1000000;
+var request = new XMLHttpRequest();
+request.onreadystatechange = function()
+{
+if (this.readyState == 4) {
+if (this.status == 200) {
+if (this.responseXML != null) {
+// extract XML data from XML file
+document.getElementById("timeNow").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("utcTime").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("humidity").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("pressure").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("currentTemp").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("targetTemp").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// hot water ON panel
+document.getElementById("waterOn").style.background = 
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// hot water OFF panel
+document.getElementById("waterOff").style.background = 
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// the last system restart date/time
+document.getElementById("lastRestart").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// the last NRF packet date/time
+document.getElementById("lastNrfPacket").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// the last NTP update date/time
+document.getElementById("lastNtpUpdate").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// NTP Errors
+document.getElementById("NtpErrors").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// nrfErrors
+document.getElementById("nrfErrors").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// dhtErrors
+document.getElementById("dhtErrors").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+// battery volts
+document.getElementById("batVolts").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+}}}}
+request.open("GET", "time_temp" + nocache, true);
+request.send(null);
+setTimeout(function(){getTimeTemp()}, 5000);
+}
+
+
+function processPage(idx,btn)
+{
+var num = 0;
+nocache = "&nocache=" + Math.random() * 1000000;
+var request = new XMLHttpRequest();
+request.onreadystatechange = function()
+{
+if (this.readyState == 4) {
+if (this.status == 200) {
+if (this.responseXML != null) {
+// extract XML data from XML file
+// the target temperature
+document.getElementById("targetTemp").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// weekdays/weekend selector array
+// sun
+document.getElementById("sun").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// mon
+document.getElementById("mon").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// tue
+document.getElementById("tue").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// wed
+document.getElementById("wed").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// thu
+document.getElementById("thu").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// fri
+document.getElementById("fri").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// sat
+document.getElementById("sat").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// the which days button
+document.getElementById("whichDays").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// morning start time
+document.getElementById("mornTime").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// morning temp
+document.getElementById("mornTemp").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("dayTime").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("dayTemp").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("eveTime").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("eveTemp").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("nightTime").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("nightTemp").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// hot water times
+document.getElementById("mornStart").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("mornEnd").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("day1Start").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("day1End").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("day2Start").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("day2End").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("eveStart").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+document.getElementById("eveEnd").innerHTML =
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+}}}}
+request.open("GET", "page_data" + ":" + idx + ":" + btn + ":" + nocache, true);
+request.send(null);
+//t = setTimeout(function(){processPage(0,0)}, 10000);
+}
+
+function waterButtons(btn) {
+var num = 0;
+nocache = "&nocache=" + Math.random() * 1000000;
+var request = new XMLHttpRequest();
+request.onreadystatechange = function()
+{
+if (this.readyState == 4) {
+if (this.status == 200) {
+if (this.responseXML != null) {
+// extract XML data from XML file
+// hot water ON panel
+document.getElementById("waterOn").style.background = 
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+// hot water OFF panel
+document.getElementById("waterOff").style.background = 
+this.responseXML.getElementsByTagName('value' + ++num)[0].childNodes[0].nodeValue;
+
+}}}}
+request.open("GET", "water_buttons" + ":" + btn + ":" + nocache, true);
+request.send(null);
+}
+
+function start() {
+	getTimeTemp();
+	processPage(0,0);
+}
+</script>
+</head>
+
+<body onload="start()">
+
+<!--
+	The index and button index use is as follows:
+	1.		change target temperature
+	2.		unassigned
+	3.		Days of week/weekend
+	4.		Weekday/Weekend selection
+	5-8 	heating time/temp selections
+	9		hot water override
+	10-13	hot water times
+	14		hot water override
+	20.		SAVE CHANGES 
+-->
+<h1 style="color: #0000FF">REMOTE HEATING CONTROL</h1>
+<table class="readings" align="center" cellpadding="3">
+	<tr>
+		<td style=" text-align: right">UK Time:</td>
+		<td style=" text-align: left"><span id="timeNow"></span></td>
+	</tr>
+	<tr>
+	<td style=" text-align: right">UTC Time:</td>
+	<td style=" text-align: left"><span id="utcTime"></span></td>
+	</tr>
+	<tr>
+	<td style=" text-align: right">Last System Restart:</td>
+	<td style=" text-align: left"><span id="lastRestart"></span></td>
+	</tr>
+	<tr>
+	<td style=" text-align: right">Last NTP Update:</td>
+	<td style="text-align: left"><span id="lastNtpUpdate"></span></td>
+	</tr>
+	<tr>
+	<td style=" text-align: right">NTP Errors:</td>
+	<td style="text-align: left"><span id="NtpErrors"></span></td>
+	</tr>
+	<tr>
+	<td style=" text-align: right">Last Remote Update:</td>
+	<td style=" text-align: left"><span id="lastNrfPacket">Time &amp; Date</span></td>
+	</tr>
+	<tr>
+	<td style=" text-align: right">Remote Packets:</td>
+	<td style=" text-align: left"><span id="nrfErrors"></span></td>
+	</tr>
+	<tr>
+	<td style=" text-align: right">Remote Errors:</td>
+	<td style=" text-align: left"><span id="dhtErrors"></span></td>
+	</tr>
+</table>
+<p><a href="eventlog.txt">Event Log File</a><br>
+<br><button class="buttonSmall" onclick="processPage(21,1)">Delete Log File (Click 3 times)</button></p>
+<div>
+<br>
+	Humidity: <span id="humidity">&nbsp;</span>%&nbsp;&nbsp;&nbsp; Barometer:
+	<span id="pressure"></span>&nbsp;mB&nbsp;&nbsp;&nbsp; Battery Volts:
+	<span id="batVolts"></span>&nbsp;V</div>
+	<br>
+<table align="center">
+	<tr>
+		<td colspan="3">
+		<h2 style="color: #0000FF">CENTRAL HEATING</h2>
+		</td>
+	</tr>
+	<tr>
+		<th>ACTUAL TEMP</th>
+		<th></th>
+		<th>TARGET TEMP</th>
+	</tr>
+	<tr>
+		<td><span id="currentTemp" class="tempVal">...</span> </td>
+		<td>&nbsp;&nbsp;&nbsp;</td>
+		<td>
+		<div>
+			<span id="targetTemp" class="tempVal">...</span> </div>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td><button onclick="processPage(1,1)">+</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button onclick="processPage(1,2)">-</button></td>
+	</tr>
+</table>
+<div>
+	<span></span><br />
+	<span>Week Days = w / Weekend Days = W</span>
+	<table align="center" cellpadding="3" class="dayTable">
+		<tr>
+			<th>S</th>
+			<th>M</th>
+			<th>T</th>
+			<th>W</th>
+			<th>T</th>
+			<th>F</th>
+			<th>S</th>
+		</tr>
+		<tr>
+			<td><button onclick="processPage(3,1)"><span id="sun">w</span>
+			</button></td>
+			<td><button onclick="processPage(3,2)"><span id="mon">w</span>
+			</button></td>
+			<td><button onclick="processPage(3,3)"><span id="tue">w</span>
+			</button></td>
+			<td><button onclick="processPage(3,4)"><span id="wed">w</span>
+			</button></td>
+			<td><button onclick="processPage(3,5)"><span id="thu">w</span>
+			</button></td>
+			<td><button onclick="processPage(3,6)"><span id="fri">w</span>
+			</button></td>
+			<td><button onclick="processPage(3,7)"><span id="sat">w</span>
+			</button></td>
+		</tr>
+	</table>
+	<br />
+	<button onclick="processPage(4,1)"><strong><span id="whichDays">WEEKDAYS</span></strong>
+	</button>
+	<table align="center" cellpadding="3">
+		<tr>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th colspan="3">&nbsp;</th>
+		</tr>
+		<tr>
+			<th>H</th>
+			<th>H</th>
+			<th>&nbsp;</th>
+			<th>M</th>
+			<th>M</th>
+			<th>&nbsp;</th>
+			<th colspan="3">Temp</th>
+		</tr>
+		<tr>
+			<th colspan="9"><strong>Morning</strong></th>
+		</tr>
+		<tr>
+			<td><button onclick="processPage(5,1)">+</button></td>
+			<td><button onclick="processPage(5,2)">-</button></td>
+			<td><span id="mornTime">00:00</span></td>
+			<td><button onclick="processPage(5,3)">+</button></td>
+			<td><button onclick="processPage(5,4)">-</button></td>
+			<td>&nbsp;&nbsp; &nbsp;</td>
+			<td><button onclick="processPage(5,5)">+</button></td>
+			<td><span id="mornTemp">0</span></td>
+			<td><button onclick="processPage(5,6)">-</button></td>
+		</tr>
+		<tr>
+			<th colspan="9"><strong>Daytime</strong></th>
+		</tr>
+		<tr>
+			<td><button onclick="processPage(6,1)">+</button></td>
+			<td><button onclick="processPage(6,2)">-</button></td>
+			<td><span id="dayTime"><span id="mornTime1">00:00</span></span></td>
+			<td><button onclick="processPage(6,3)">+</button></td>
+			<td><button onclick="processPage(6,4)">-</button></td>
+			<td>&nbsp;&nbsp; &nbsp;</td>
+			<td><button onclick="processPage(6,5)">+</button></td>
+			<td><span id="dayTemp">0</span></td>
+			<td><button onclick="processPage(6,6)">-</button></td>
+		</tr>
+		<tr>
+			<th colspan="9"><strong>Evening</strong></th>
+		</tr>
+		<tr>
+			<td><button onclick="processPage(7,1)">+</button></td>
+			<td><button onclick="processPage(7,2)">-</button></td>
+			<td><span id="eveTime">00:00</span></td>
+			<td><button onclick="processPage(7,3)">+</button></td>
+			<td><button onclick="processPage(7,4)">-</button></td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td><button onclick="processPage(7,5)">+</button></td>
+			<td><span id="eveTemp">0</span></td>
+			<td><button onclick="processPage(7,6)">-</button></td>
+		</tr>
+		<tr>
+			<th colspan="9"><strong>Night</strong></th>
+		</tr>
+		<tr>
+			<td><button onclick="processPage(8,1)">+</button></td>
+			<td><button onclick="processPage(8,2)">-</button></td>
+			<td><span id="nightTime">00:00</span></td>
+			<td><button onclick="processPage(8,3)">+</button></td>
+			<td><button onclick="processPage(8,4)">-</button></td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td><button onclick="processPage(8,5)">+</button></td>
+			<td><span id="nightTemp">0</span></td>
+			<td><button onclick="processPage(8,6)">-</button></td>
+		</tr>
+	</table>
+	<div>
+		<h2 style="color: #0000FF">HOT WATER</h2>
+		<button id="waterOn" class="waterButtons" onclick="waterButtons(1)">ON
+		</button><span style="display: inline-block; width: 3em"></span>
+		<button id="waterOff" class="waterButtons" onclick="waterButtons(2)">OFF
+		</button><br>
+		<table align="center" cellpadding="3">
+			<tr>
+				<th>H</th>
+				<th>H</th>
+				<th></th>
+				<th>M</th>
+				<th>M</th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</th>
+				<th>H</th>
+				<th>H</th>
+				<th></th>
+				<th>M</th>
+				<th>M</th>
+			</tr>
+			<tr>
+				<th colspan="5">Morning Start</th>
+				<th>&nbsp;</th>
+				<th colspan="5">Morning End</th>
+			</tr>
+			<tr>
+				<td><button onclick="processPage(10,1)">+</button></td>
+				<td><button onclick="processPage(10,2)">-</button></td>
+				<td><span id="mornStart">00:00</span></td>
+				<td><button onclick="processPage(10,3)">+</button></td>
+				<td><button onclick="processPage(10,4)">-</button></td>
+				<td></td>
+				<td><button onclick="processPage(10,5)">+</button></td>
+				<td><button onclick="processPage(10,6)">-</button></td>
+				<td><span id="mornEnd">00:00</span></td>
+				<td><button onclick="processPage(10,7)">+</button></td>
+				<td><button onclick="processPage(10,8)">-</button></td>
+			</tr>
+			<tr>
+				<td colspan="5"><strong>Daytime1 Start</strong></td>
+				<td>&nbsp;</td>
+				<td colspan="5"><strong>Daytime1 End</strong></td>
+			</tr>
+			<tr>
+				<td><button onclick="processPage(11,1)">+</button></td>
+				<td><button onclick="processPage(11,2)">-</button></td>
+				<td><span id="day1Start">00:00</span></td>
+				<td><button onclick="processPage(11,3)">+</button></td>
+				<td><button onclick="processPage(11,4)">-</button></td>
+				<td></td>
+				<td><button onclick="processPage(11,5)">+</button></td>
+				<td><button onclick="processPage(11,6)">-</button></td>
+				<td><span id="day1End">00:00</span></td>
+				<td><button onclick="processPage(11,7)">+</button></td>
+				<td><button onclick="processPage(11,8)">-</button></td>
+			</tr>
+			<tr>
+				<td colspan="5"><strong>Daytime2 Start</strong></td>
+				<td>&nbsp;</td>
+				<td colspan="5"><strong>Daytime2 End</strong></td>
+			</tr>
+			<tr>
+				<td><button onclick="processPage(12,1)">+</button></td>
+				<td><button onclick="processPage(12,2)">-</button></td>
+				<td><span id="day2Start">00:00</span></td>
+				<td><button onclick="processPage(12,3)">+</button></td>
+				<td><button onclick="processPage(12,4)">-</button></td>
+				<td></td>
+				<td><button onclick="processPage(12,5)">+</button></td>
+				<td><button onclick="processPage(12,6)">-</button></td>
+				<td><span id="day2End">00:00</span></td>
+				<td><button onclick="processPage(12,7)">+</button></td>
+				<td><button onclick="processPage(12,8)">-</button></td>
+			</tr>
+			<tr>
+				<td colspan="5"><strong>Evening Start</strong></td>
+				<td>&nbsp;</td>
+				<td colspan="5"><strong>Evening End</strong></td>
+			</tr>
+			<tr>
+				<td><button onclick="processPage(13,1)">+</button></td>
+				<td><button onclick="processPage(13,2)">-</button></td>
+				<td><span id="eveStart">00:00</span></td>
+				<td><button onclick="processPage(13,3)">+</button></td>
+				<td><button onclick="processPage(13,4)">-</button></td>
+				<td></td>
+				<td><button onclick="processPage(13,5)">+</button></td>
+				<td><button onclick="processPage(13,6)">-</button></td>
+				<td><span id="eveEnd">00:00</span></td>
+				<td><button onclick="processPage(13,7)">+</button></td>
+				<td><button onclick="processPage(13,8)">-</button></td>
+			</tr>
+		</table>
+	</div>
+	<br />
+	<button onclick="processPage(20,1)">SAVE CHANGES</button>&nbsp;&nbsp;&nbsp;&nbsp;
+	<button onclick="location.href='dateTime.html';">SET DATE &amp; TIME
+	</button>
+</div>
+
+</body>
+
+</html>
