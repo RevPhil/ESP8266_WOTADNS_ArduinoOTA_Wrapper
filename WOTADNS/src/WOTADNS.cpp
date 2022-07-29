@@ -44,7 +44,7 @@ int WOTADNS::beginWiFi(const char* ssid, const char* password,const char* hostna
     while (connectLoop-- && wifiTimeout) {
       if (WiFi.status() == WL_CONNECTED) {
         wifiTimeout = false;
-		if(ledIsON) WOTADNS_LED_OFF
+		if(ledIsON) sigLedOff();
         break;
       }
       else {
@@ -54,14 +54,14 @@ int WOTADNS::beginWiFi(const char* ssid, const char* password,const char* hostna
         delay(500); // wait 500 mS
       }
     }
-	if(ledIsON) WOTADNS_LED_OFF
+	if(ledIsON) sigLedOff();
 		// if successful, flassh the LED rapidly and return true
 	if(!wifiTimeout) {
 		// if successful, flassh the LED rapidly 10 x 3 times
 		for(uint8_t x = 0;x<10;x++) {
-			if(ledIsON) WOTADNS_LED_ON
+			if(ledIsON) sigLedOn();
 			delay(100);
-			if(ledIsON) WOTADNS_LED_OFF
+			if(ledIsON) sigLedOff();
 			delay(100);
 		}
 		ledOFF();	// return LED pin to INPUT
@@ -169,12 +169,23 @@ void WOTADNS::ledOFF(void) {
 	ledIsON = false;
 }
 
-String WOTADNS::pad(String str1, String str2, uint8_t len) {
+String WOTADNS::pad(String str1, uint8_t len) {
 	String pads;
 	for(uint8_t x = 0;x<(len - str1.length());x++) pads += " ";
-	return pads + str1 + str2;
+	return pads + str1;
 }
 
-String WOTADNS::pad(String str1, uint8_t len) {
-	return pad(str1,"",len);
+void WOTADNS::sigLedOn(void) {
+#ifdef ESP8266
+	digitalWrite(ledPin,LOW);
+#else
+	digitalWrite(ledPin,HIGH);
+#endif
+}
+void WOTADNS::sigLedOff(void) {
+#ifdef ESP8266
+	digitalWrite(ledPin,HIGH);
+#else
+	digitalWrite(ledPin,LOW);
+#endif
 }
